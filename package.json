@@ -1,0 +1,23 @@
+{
+  "name": "promises-promises",
+  "version": "1.0.0",
+  "description": "I promise this will be fun",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tysonmcnulty/promises-promises.git"
+  },
+  "author": "Tyson McNulty",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tysonmcnulty/promises-promises/issues"
+  },
+  "homepage": "https://github.com/tysonmcnulty/promises-promises#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "spotify-web-api-node": "^3.1.1"
+  }
+}
