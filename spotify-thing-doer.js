@@ -2,12 +2,12 @@ const SpotifyWebApi = require('spotify-web-api-node');
 const secrets = require('./secrets');
 const muzak = require('./muzak');
 
-const SEARCH_TIME = 45000;
+const SEARCH_TIME = 15000;
 
 const api = new SpotifyWebApi();
 api.setAccessToken(secrets.ACCESS_TOKEN);
 
-function findTracksForArtist(trackName, artistName) {
+function findTrack(trackName, artistName) {
   return api.search(trackName, ['track']).then((data) => {
     return data.body.tracks.items.find(item => (
       item.artists.some(artist => (
@@ -48,7 +48,7 @@ function searchSynchronously(trackName, artistName, out) {
   play(muzak.ipanema);
 
   setTimeout(() => {
-    findTracksForArtist(trackName, artistName).then(results => {
+    findTrack(trackName, artistName).then(results => {
       out.tracks = results
       pause();
     })
@@ -59,7 +59,7 @@ function searchWithCallback(trackName, artistName, callback) {
   play(muzak.callMeMaybe);
 
   setTimeout(() => {
-    findTracksForArtist(trackName, artistName).then(results => {
+    findTrack(trackName, artistName).then(results => {
       pause();
       callback(results);
     })
@@ -71,7 +71,7 @@ function searchWithPromises(trackName, artistName) {
 
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      findTracksForArtist(trackName, artistName).then(results => {
+      findTrack(trackName, artistName).then(results => {
         pause();
         resolve(results);
       })
@@ -81,7 +81,7 @@ function searchWithPromises(trackName, artistName) {
 
 module.exports = {
   api,
-  findTracksForArtist,
+  findTrack,
   play,
   pause,
   unpause,
