@@ -1,4 +1,5 @@
 const SpotifyWebApi = require('spotify-web-api-node');
+const sync = require('synchronize');
 const secrets = require('./secrets');
 const muzak = require('./muzak');
 
@@ -44,15 +45,40 @@ function wait(ms) {
   }
 }
 
-function searchSynchronously(trackName, artistName, out) {
+function searchSync(trackName, artistName, out) {
+  var done = false;
   play(muzak.ipanema);
 
   setTimeout(() => {
     findTrack(trackName, artistName).then(results => {
       out.tracks = results
+      done = true
       pause();
     })
   }, SEARCH_TIME)
+
+  wait(1000)
+  wait(1000)
+  wait(1000)
+
+  return out
+}
+
+var doSearch = (trackName, artistName, cb) => {
+  setTimeout(() => {
+    findTrack(trackName, artistName).then(results => {
+      pause();
+      cb(null, results)
+    })
+  }, SEARCH_TIME)
+}
+
+function searchVerySync(trackName, artistName) {
+  play(muzak.ipanema);
+  var track = sync.await(doSearch(trackName, artistName, sync.defer()));
+  pause();
+
+  return track;
 }
 
 function searchWithCallback(trackName, artistName, callback) {
@@ -85,7 +111,8 @@ module.exports = {
   play,
   pause,
   unpause,
-  searchSynchronously,
+  searchSync,
+  searchVerySync,
   searchWithCallback,
   searchWithPromises
 };

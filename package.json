@@ -18,6 +18,7 @@
   "homepage": "https://github.com/tysonmcnulty/promises-promises#readme",
   "dependencies": {
     "express": "^4.16.3",
-    "spotify-web-api-node": "^3.1.1"
+    "spotify-web-api-node": "^3.1.1",
+    "synchronize": "^2.0.0"
   }
 }
