@@ -45,8 +45,7 @@ function wait(ms) {
   }
 }
 
-function searchSync(trackName, artistName, out) {
-  var done = false;
+function searchWithObjectPolling(trackName, artistName, out) {
   play(muzak.ipanema);
 
   setTimeout(() => {
@@ -56,12 +55,6 @@ function searchSync(trackName, artistName, out) {
       pause();
     })
   }, SEARCH_TIME)
-
-  wait(1000)
-  wait(1000)
-  wait(1000)
-
-  return out
 }
 
 var doSearch = (trackName, artistName, cb) => {
@@ -73,7 +66,7 @@ var doSearch = (trackName, artistName, cb) => {
   }, SEARCH_TIME)
 }
 
-function searchVerySync(trackName, artistName) {
+function searchWithFibers(trackName, artistName) {
   play(muzak.ipanema);
   var track = sync.await(doSearch(trackName, artistName, sync.defer()));
   pause();
@@ -111,8 +104,8 @@ module.exports = {
   play,
   pause,
   unpause,
-  searchSync,
-  searchVerySync,
+  searchWithObjectPolling,
+  searchWithFibers,
   searchWithCallback,
   searchWithPromises
 };

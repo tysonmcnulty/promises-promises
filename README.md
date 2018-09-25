@@ -16,7 +16,39 @@
 In REPL:
 ```
 var wrapper = require('./spotify-thing-doer')
+var muzak = require('./muzak');
 
-wrapper.findTracksForArtist('track', 'artist').then(console.log)
-wrapper.api.play({ device_id: 'ID', uris: ['spotify:track:5yZT3gqgZNBkTPX6G3XDTL'] })
+wrapper.findTrack('Toxic', 'Britney').then(wrapper.play);
+setTimeout(wrapper.pause, 5000);
+```
+
+## Code examples
+```
+
+// Search with object polling
+var out;
+
+wrapper.searchWithObjectPolling('Toxic', 'Britney', out);
+// wait and poll your object yourself
+wrapper.play(out.track);
+
+
+// Search with callback
+var cb = wrapper.play
+wrapper.searchWithCallback('Toxic', 'Britney', cb);
+
+// Search with promises
+var promise;
+promise = wrapper.searchWithPromises('Toxic', 'Britney')
+promise.then(wrapper.play);
+
+// Search with async/await;
+
+// Search with FIBERS
+var sync = require('synchronize');
+
+sync.fiber(() => {
+  var track = wrapper.searchWithFibers('Toxic', 'Britney');
+  wrapper.play(track);
+});
 ```
