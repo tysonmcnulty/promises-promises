@@ -62,3 +62,4 @@ typings/
 
 # secrets
 /secrets.js
+/player/public/token-init.js

@@ -1,17 +1,23 @@
 # promises-promises
 
-## Notes
+## Getting started
 
+1. Clone credentials files:
+  ```
+  cp secrets.js.example secrets.js
+  cp player/public/token-init.js.example player/public/token-init.js
+  ```
 1. Get token: https://developer.spotify.com/documentation/web-playback-sdk/quick-start/
-1. Update token in `player/public/player-init.js`
+1. Update `ACCESS_TOKEN` in `player/public/token-init.js`
 1. Start player:
   ```
   cd ~/workspace/promises-promises/player
   node app.js
   ```
 1. Go to `http://localhost:3000`
-1. Get device ID form console
-1. Update token and device id in `secrets.js`.
+1. Get Device ID from console (it should say "Ready with Device ID <device-id>")
+1. `cp secrets.js.example secrets.js`
+1. Update `ACCESS_TOKEN` and `DEVICE_ID` in `secrets.js`.
 
 In REPL:
 ```
@@ -34,17 +40,20 @@ wrapper.play(out.track);
 
 
 // Search with callback
-var cb = wrapper.play
-wrapper.searchWithCallback('Toxic', 'Britney', cb);
+wrapper.searchWithCallback('Toxic', 'Britney', wrapper.play);
 
 // Search with promises
 var promise;
-promise = wrapper.searchWithPromises('Toxic', 'Britney')
+promise = wrapper.searchWithPromises('Toxic', 'Britney');
 promise.then(wrapper.play);
 
-// Search with async/await;
+// Search with async/await
+async function searchWithAsyncAwait() {
+  var track = await wrapper.searchWithPromises('Toxic', 'Britney');
+  wrapper.play(track);
+}
 
-// Search with FIBERS
+// Search with fibers (using synchronize)
 var sync = require('synchronize');
 
 sync.fiber(() => {

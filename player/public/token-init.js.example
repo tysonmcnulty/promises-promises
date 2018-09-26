@@ -1,0 +1,5 @@
+(function tokenInit() {
+  const ACCESS_TOKEN = 'my-access-token';
+
+  sessionStorage.setItem('ACCESS_TOKEN', ACCESS_TOKEN);
+})();
