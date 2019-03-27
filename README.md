@@ -32,6 +32,11 @@ wrapper.findTrack('Toxic', 'Britney').then(wrapper.play);
 setTimeout(wrapper.pause, 5000);
 ```
 
+Or as a consumer:
+```
+var wrapper = require('promises-promises');
+```
+
 ## Code examples
 ```
 
