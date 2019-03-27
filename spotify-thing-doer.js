@@ -1,5 +1,5 @@
 const SpotifyWebApi = require('spotify-web-api-node');
-const sync = require('synchronize');
+const sync = require('synchronize_f2');
 const secrets = require('./secrets');
 const muzak = require('./muzak');
 

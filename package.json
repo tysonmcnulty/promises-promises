@@ -19,6 +19,6 @@
   "dependencies": {
     "express": "^4.16.3",
     "spotify-web-api-node": "^4.0.0",
-    "synchronize": "^2.0.0"
+    "synchronize_f2": "^3.0.0"
   }
 }

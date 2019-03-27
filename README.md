@@ -2,6 +2,7 @@
 
 ## Getting started
 
+1. `npm install`
 1. Clone credentials files:
   ```
   cp secrets.js.example secrets.js
