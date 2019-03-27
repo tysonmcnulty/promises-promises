@@ -1,4 +1,6 @@
-# promises-promises
+# Spotify Thing Doer
+
+Do things.
 
 ## Getting started
 
@@ -34,7 +36,7 @@ setTimeout(wrapper.pause, 5000);
 
 Or as a consumer:
 ```
-var wrapper = require('promises-promises');
+var wrapper = require('spotify-thing-doer');
 ```
 
 ## Code examples
