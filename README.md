@@ -4,20 +4,23 @@
 
 1. `npm install`
 1. Clone credentials files:
+
   ```
   cp secrets.js.example secrets.js
   cp player/public/token-init.js.example player/public/token-init.js
   ```
+
 1. Get token: https://developer.spotify.com/documentation/web-playback-sdk/quick-start/
 1. Update `ACCESS_TOKEN` in `player/public/token-init.js`
 1. Start player:
+
   ```
   cd ~/workspace/promises-promises/player
   node app.js
   ```
+
 1. Go to `http://localhost:3000`
 1. Get Device ID from console (it should say "Ready with Device ID <device-id>")
-1. `cp secrets.js.example secrets.js`
 1. Update `ACCESS_TOKEN` and `DEVICE_ID` in `secrets.js`.
 
 In REPL:
@@ -56,9 +59,21 @@ async function searchWithAsyncAwait() {
 
 // Search with fibers (using synchronize)
 var sync = require('synchronize');
-
 sync.fiber(() => {
   var track = wrapper.searchWithFibers('Toxic', 'Britney');
   wrapper.play(track);
 });
+
+// Make a cool Elevator Music player!
+var player;
+wrapper.createOneTrackSpotifyPlayer({
+  trackName: 'Back in Time',
+  artistName: 'Huey Lewis'
+}).then((result) => { 
+  player = result;
+  console.log('Ready!');
+});
+
+player.start()
+setTimeout(player.stop, 5000);
 ```

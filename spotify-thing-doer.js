@@ -37,14 +37,6 @@ function pause() {
   })
 }
 
-function wait(ms) {
-  var start = Date.now();
-  var now = start;
-  while (now - start < ms) {
-    now = Date.now();
-  }
-}
-
 function searchWithObjectPolling(trackName, artistName, out) {
   play(muzak.ipanema);
 
@@ -64,7 +56,7 @@ var doSearch = (trackName, artistName, cb) => {
       cb(null, results)
     })
   }, SEARCH_TIME)
-}
+};
 
 function searchWithFibers(trackName, artistName) {
   play(muzak.ipanema);
@@ -98,8 +90,41 @@ function searchWithPromises(trackName, artistName) {
   });
 }
 
+async function createOneTrackSpotifyPlayer({ trackName, artistName, config = secrets }) {
+  const internalApi = new SpotifyWebApi();
+  internalApi.setAccessToken(config.ACCESS_TOKEN);
+
+  const player = {
+    api: internalApi,
+    config,
+    track: await internalApi.search(trackName, ['track']).then((data) => {
+      return data.body.tracks.items.find(item => (
+          item.artists.some(artist => (
+              artist.name.toLowerCase().includes(artistName.toLowerCase())
+          ))
+      ));
+    })
+  };
+
+  function start() {
+    return this.api.play({
+      device_id: this.config.DEVICE_ID,
+      uris: [this.track.uri]
+    })
+  }
+  player.start = start.bind(player);
+
+  function stop() {
+    return this.api.pause({
+      device_id: this.config.DEVICE_ID
+    })
+  }
+  player.stop = stop.bind(player);
+
+  return player;
+}
+
 module.exports = {
-  api,
   findTrack,
   play,
   pause,
@@ -107,5 +132,6 @@ module.exports = {
   searchWithObjectPolling,
   searchWithFibers,
   searchWithCallback,
-  searchWithPromises
+  searchWithPromises,
+  createOneTrackSpotifyPlayer
 };
