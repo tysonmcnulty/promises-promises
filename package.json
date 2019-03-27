@@ -2,7 +2,7 @@
   "name": "promises-promises",
   "version": "1.0.0",
   "description": "I promise this will be fun",
-  "main": "index.js",
+  "main": "spotify-thing-doer.js",
   "scripts": {
     "test": "test"
   },
